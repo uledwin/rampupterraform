@@ -1,0 +1,81 @@
+name: 'Terraform CD Pipeline'
+
+on:
+  push:
+    branches:  
+    - terraform_dev
+    - terraform_uat
+    - terraform_main
+    
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    name: 'Terraform CD Pipeline'
+    runs-on: ubuntu-latest
+    env:
+      ARM_CLIENT_ID: 97f36c8f-940d-4c8c-813e-e9af0f248f08
+      ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: 4e7a46b2-ae3f-47ad-abc1-18787dd5c735
+      ARM_TENANT_ID: 0b3fc178-b730-4e8b-9843-e81259237b77
+      
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      run: terraform init
+
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      run: terraform fmt -check
+
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform validate
+      run: terraform validate
+
+   # Select Terraform workspace & generates an execution plan for Terraform
+    - name: Terraform Workspace Dev
+      if: ${{ github.ref == 'refs/heads/terraform_dev' }}
+      env: 
+        environment: dev
+      run: | 
+        terraform workspace list
+        terraform workspace select ${{ env.environment }}
+        terraform plan -out dev.tfplan -input=false
+        terraform apply dev.tfplan
+
+   # Select Terraform workspace & generates an execution plan for Terraform   
+    - name: Terraform Workspace uat
+      if: ${{ github.ref == 'refs/heads/terraform_uat' }}
+      env: 
+        environment: uat
+      run: | 
+        terraform workspace list
+        terraform workspace select ${{ env.environment }}
+        terraform plan -out uat.tfplan -input=false
+        terraform apply uat.tfplan
+
+   # Select Terraform workspace & generates an execution plan for Terraform   
+    - name: Terraform Workspace prod
+      if: ${{ github.ref == 'refs/heads/terraform_main' }}
+      env: 
+        environment: prod
+      run: | 
+        terraform workspace list
+        terraform workspace select ${{ env.environment }}
+        terraform plan -out prod.tfplan -input=false
+        terraform apply prod.tfplan
