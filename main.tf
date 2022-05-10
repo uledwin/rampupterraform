@@ -1,8 +1,10 @@
 module "resourcegroup" {
-  source   = "./modules/resourceg"
-  prefix   = var.prefix
-  rg_name  = "${var.prefix}-${terraform.workspace}-${var.rg_name}"
-  location = var.location
+  source      = "./modules/resourceg"
+  prefix      = var.prefix
+  rg_name     = "${var.prefix}-${terraform.workspace}-${var.rg_name}"
+  location    = var.location
+  vnet_name   = "${var.prefix}-${terraform.workspace}-${var.vnet_name}"
+  subnet_name = "${var.prefix}-${terraform.workspace}-${var.subnet_name}"
 }
 
 module "mysql" {

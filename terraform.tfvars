@@ -1,7 +1,9 @@
 
-rg_name  = "rg"
-location = "East US"
-prefix   = "eultengo"
+rg_name     = "rg"
+location    = "East US"
+prefix      = "eultengo"
+vnet_name   = "vnet"
+subnet_name = "subnet"
 
 ##### AKS ACR
 cluster_name        = "aks"
@@ -16,4 +18,4 @@ sql_server_name     = "sqlserver01"
 sql_server_login    = "prueba01"
 sql_server_password = "@Aa123456789!"
 sql_database_name   = "name-sqldatabase"
-name_keyvault       = "keyvault"
+name_keyvault       = "keyvault01"
