@@ -15,10 +15,10 @@ variable "prefix" {
 
 variable "vnet_name" {
   description = "Name of Vnet"
-  type= string
+  type        = string
 }
 
 variable "subnet_name" {
   description = "Name of Subnet"
-  type = string
+  type        = string
 }

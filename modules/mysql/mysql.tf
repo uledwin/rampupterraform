@@ -52,7 +52,6 @@ resource "azurerm_mysql_server" "mysql_server" {
   ssl_enforcement_enabled           = true
   ssl_minimal_tls_version_enforced  = "TLS1_2"
 }
-
 resource "azurerm_mysql_database" "mysql_database" {
   name                = var.sql_database_name
   resource_group_name = var.rg_name
