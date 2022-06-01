@@ -1,5 +1,6 @@
 module "resourcegroup" {
-  source      = "./modules/resourceg"
+  #source      = "./modules/resourceg"
+  source      = "github.com/uledwin/rampupterraform-modules/resourceg"
   prefix      = var.prefix
   rg_name     = "${var.prefix}-${terraform.workspace}-${var.rg_name}"
   location    = var.location
@@ -8,7 +9,8 @@ module "resourcegroup" {
 }
 
 module "mysql" {
-  source              = "./modules/mysql"
+  #source              = "./modules/mysql"
+  source              = "github.com/uledwin/rampupterraform-modules/mysql"
   prefix              = var.prefix
   rg_name             = "${var.prefix}-${terraform.workspace}-${var.rg_name}"
   location            = var.location
@@ -22,7 +24,8 @@ module "mysql" {
 }
 
 module "aks" {
-  source              = "./modules/aks"
+  #source              = "./modules/aks"
+  source              = "github.com/uledwin/rampupterraform-modules/aks"
   prefix              = var.prefix
   rg_name             = "${var.prefix}-${terraform.workspace}-${var.rg_name}"
   location            = var.location
