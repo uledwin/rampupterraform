@@ -17,6 +17,7 @@ module "mysql" {
   sql_server_password = var.sql_server_password
   sql_database_name   = "${var.prefix}-${terraform.workspace}-${var.sql_database_name}"
   name_keyvault       = "${var.prefix}-${terraform.workspace}-${var.name_keyvault}"
+  fwmysqlconnection   = "${var.prefix}-${terraform.workspace}-${var.fwmysqlconnection}"
   depends_on          = [module.resourcegroup]
 }
 

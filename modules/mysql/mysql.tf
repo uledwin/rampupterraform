@@ -48,8 +48,7 @@ resource "azurerm_mysql_server" "mysql_server" {
   backup_retention_days             = 7
   geo_redundant_backup_enabled      = true
   infrastructure_encryption_enabled = true
-  public_network_access_enabled     = false
-  ssl_enforcement_enabled           = true
+  ssl_enforcement_enabled           = false
   ssl_minimal_tls_version_enforced  = "TLS1_2"
 }
 resource "azurerm_mysql_database" "mysql_database" {
@@ -58,4 +57,13 @@ resource "azurerm_mysql_database" "mysql_database" {
   server_name         = azurerm_mysql_server.mysql_server.name
   charset             = "utf8"
   collation           = "utf8_unicode_ci"
+}
+
+## Allow access to Azure services)
+resource "azurerm_mysql_firewall_rule" "firewallmysql" {
+  name                = var.fwmysqlconnection
+  resource_group_name = var.rg_name
+  server_name         = azurerm_mysql_server.mysql_server.name
+  start_ip_address    = "0.0.0.0"
+  end_ip_address      = "0.0.0.0"
 }
