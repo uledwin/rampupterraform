@@ -45,3 +45,8 @@ variable "name_keyvault" {
   type        = string
 
 }
+
+variable "fwmysqlconnection" {
+  description = "Allow access to azure services"
+  type        = string
+}

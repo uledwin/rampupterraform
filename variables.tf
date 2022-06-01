@@ -84,3 +84,8 @@ variable "vmsize" {
   type        = string
   description = "Size of nodes in cluster"
 }
+
+variable "fwmysqlconnection" {
+  description = "Allow access to azure services"
+  type        = string
+}
