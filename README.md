@@ -1,5 +1,4 @@
 ## Requirements
-To activate pipeline_
 
 | Name | Version |
 |------|---------|
